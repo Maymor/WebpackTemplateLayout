@@ -22,5 +22,4 @@ module.exports = () => {
         })
       ]
     }
-    return merge(baseConfig, config)
   }
