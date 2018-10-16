@@ -2,7 +2,11 @@ const path = require('path')
 const webpack = require('webpack')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const utils = require('./utils')
-
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const config = require('../config')
+const env = config.dev.env
+const host = config.dev.host
+const port = config.dev.port
 
 module.exports =  {
       devServer: {
@@ -12,7 +16,7 @@ module.exports =  {
           aggregateTimeout: 300,
           poll: 1000
         },
-        host: process.env.HOST,
+        host: host,
         port: process.env.PORT
       },
       module: {
@@ -22,7 +26,12 @@ module.exports =  {
         })
       },
       devtool: '#source-map',
-      plugins: [      
+      plugins: [
+        new HtmlWebpackPlugin({
+          title: 'Vue-webpack template step by step',
+          filename: 'index.html',
+          inject: true,
+        }),
         new webpack.WatchIgnorePlugin([
           path.join(__dirname, '..', 'node_modules')
         ]),
@@ -31,17 +40,11 @@ module.exports =  {
             messages: ['You appication is running here http://localhost:8080'],
             notes: ['Some additionsl notes to be displayed unpon successful compilatioin']
           },
-          onErrors: function (severity, errors) {
-            // console.log('severity = ', severity)
-            // console.log('errors = ', errors) 
-          },
           clearConsole: true
         }),
         new webpack.NoEmitOnErrorsPlugin(),    
         new webpack.DefinePlugin({
-          'process.env': {
-            NODE_ENV: JSON.stringify('development')
-          }
+          'process.env': env
         })
       ]
   } 
