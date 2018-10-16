@@ -1,4 +1,6 @@
 const webpack = require('webpack')
+const merge = require('webpack-merge')
+const baseConf = require('./webpack.base.conf')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 const utils = require('./utils')
@@ -6,7 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const config = require('../config')
 const env = config.prod.env
 
-module.exports =  {
+module.exports = merge(baseConf, {
   module: {
     rules: utils.styleLoaders({ 
       sourceMap: true,
@@ -43,4 +45,4 @@ module.exports =  {
         minRatio: 0.8
       })
     ]
-}
+})
