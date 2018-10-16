@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
     entry: {
@@ -16,6 +17,7 @@ module.exports = {
       errorDetails: true
     },
     plugins: [
+      new ExtractTextPlugin('css/style.css'),
       new HtmlWebpackPlugin({
         title: 'Vue-webpack template step by step',
         filename: 'index.html',

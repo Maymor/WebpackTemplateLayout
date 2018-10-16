@@ -1,10 +1,10 @@
 const path = require('path')
 const webpack = require('webpack')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+const utils = require('./utils')
 
 
-module.exports = () => {
-    const config = {
+module.exports =  {
       devServer: {
         historyApiFallback: true,
         stats: 'errors-only',
@@ -15,19 +15,25 @@ module.exports = () => {
         host: process.env.HOST,
         port: process.env.PORT
       },
+      module: {
+        rules: utils.styleLoaders({ 
+          sourceMap: true,
+          extract: true
+        })
+      },
+      devtool: '#source-map',
       plugins: [      
         new webpack.WatchIgnorePlugin([
           path.join(__dirname, '..', 'node_modules')
         ]),
-        
         new FriendlyErrorsPlugin({
           compilationSuccessInfo: {
             messages: ['You appication is running here http://localhost:8080'],
             notes: ['Some additionsl notes to be displayed unpon successful compilatioin']
           },
           onErrors: function (severity, errors) {
-            /*console.log('severity = ', severity)
-            console.log('errors = ', errors) */
+            // console.log('severity = ', severity)
+            // console.log('errors = ', errors) 
           },
           clearConsole: true
         }),
@@ -38,5 +44,4 @@ module.exports = () => {
           }
         })
       ]
-    }
   } 
